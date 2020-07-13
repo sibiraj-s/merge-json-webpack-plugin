@@ -1,11 +1,11 @@
-import { Options as GlobOptions } from 'fast-glob'
+import { Options as GlobOptions } from 'fast-glob';
 
 interface Options {
   root: string;
   minify: boolean | 'auto';
   mergeFn: (prev: any, current: any) => any;
   group: [{ files: string[] | string; to: string }];
-  globOptions: GlobOptions
+  globOptions: GlobOptions;
 }
 
 declare class MergeJsonPlugin {

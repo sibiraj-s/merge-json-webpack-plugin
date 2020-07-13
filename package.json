@@ -12,6 +12,10 @@
   "engines": {
     "node": ">=10"
   },
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "scripts": {
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest"

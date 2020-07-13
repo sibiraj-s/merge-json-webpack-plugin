@@ -35,8 +35,7 @@ module.exports = {
       group: [
         {
           files: [
-            'common-manifest.json',
-            'firefox-manifest.json'
+            'common-manifest.json', 'firefox-manifest.json'
           ],
           to: 'manifest.json',
         },
@@ -52,16 +51,16 @@ module.exports = {
 
 ### Options
 
-- **root** - The directory, an absolute path, for resolving files.
+- **root**[`string`] - The directory, an absolute path, for resolving files.
 
-- **group** - files to merge and destination path
+- **group**[`array`] - Files to merge and destination path
 
-  - **files** - array of files or [glob](https://github.com/mrmlnc/fast-glob). The order of merge is not guarenteed when glob is used.
-  - **to**: destination path to write the files to.
+  - **files**[`array`] or [[glob](https://github.com/mrmlnc/fast-glob)] - The order of merge is not guarenteed when glob is used.
+  - **to**[`string`]: Destination path to write the files to.
 
-- **minify** - whether to minify the merged json. Enabled by default in production mode.
+- **minify**[`boolean`] - Minify the output json. Enabled by default in production mode.
 
-- **mergeFn** - a function used to merge two objects. defaults for `Object.assign`
+- **mergeFn**[`function`] - A function used to merge two objects. Default is `Object.assign`
 
 ```js
 // webpack.config.js
@@ -80,4 +79,4 @@ module.exports = {
 };
 ```
 
-- **globOptions** - options to foward to `fast-glob` when glob is used, see https://github.com/mrmlnc/fast-glob#options-3.
+- **globOptions[`GlobOptions`]** - Options to foward to `fast-glob` when glob is used otherwise ignored. See https://github.com/mrmlnc/fast-glob#options-3.

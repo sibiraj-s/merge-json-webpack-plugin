@@ -17,6 +17,7 @@
     "index.d.ts"
   ],
   "scripts": {
+    "prepublishOnly": "npm run test",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest"
   },

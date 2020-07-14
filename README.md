@@ -35,7 +35,8 @@ module.exports = {
       group: [
         {
           files: [
-            'common-manifest.json', 'firefox-manifest.json'
+            'common-manifest.json',
+            'firefox-manifest.json'
           ],
           to: 'manifest.json',
         },

@@ -1,10 +1,18 @@
 import { Options as GlobOptions } from 'fast-glob';
 
+type json = {} | { [key: string]: any }
+
+interface GroupOptions {
+  files: string[] | string;
+  beforeEmit?: (outputJson: json) => json
+  to: string;
+}
+
 interface Options {
   root: string;
   minify: boolean | 'auto';
-  mergeFn: (prev: any, current: any) => any;
-  group: [{ files: string[] | string; to: string }];
+  mergeFn: (prev: json, current: json) => json;
+  group: GroupOptions[];
   globOptions: GlobOptions;
 }
 

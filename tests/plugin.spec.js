@@ -268,3 +268,32 @@ test('should ignore files other than json by default when files selected via glo
   expect(stats.compilation.warnings).toEqual([]);
   await match(dirName);
 });
+
+test('should invoke beforeEmit function', async () => {
+  const dirName = 'default';
+  const files = await getFiles(dirName);
+
+  const beforeEmit = jest.fn().mockResolvedValue({});
+
+  const plugins = [
+    new MergeJsonPlugin({
+      group: [{
+        files,
+        beforeEmit,
+        to: outFileName,
+      }],
+    }),
+  ];
+
+  const mock = jest.fn();
+
+  const config = webpackConfig({ plugins });
+  const stats = await wp(config);
+  mock();
+
+  expect(beforeEmit).toHaveBeenCalled();
+  expect(beforeEmit).toHaveBeenCalledBefore(mock);
+
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+});

@@ -40,7 +40,7 @@ class MergeJsonPlugin {
         try {
           const assetsPromises = group.map(async (g) => {
             let { files } = g;
-            const outputPath = g.to;
+            const { to: outputPath, beforeEmit } = g;
 
             if (!outputPath) {
               compilation.errors.push('Destination path is required.');
@@ -97,6 +97,10 @@ class MergeJsonPlugin {
             const minify = (this.options.minify === true) || (this.options.minify === 'auto' && isProdMode);
 
             let finalJson;
+            if (typeof beforeEmit === 'function') {
+              finalJson = await beforeEmit(mergedJson);
+            }
+
             if (minify) {
               finalJson = JSON.stringify(mergedJson, null, 0);
             } else {

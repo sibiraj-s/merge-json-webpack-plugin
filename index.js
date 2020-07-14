@@ -96,15 +96,15 @@ class MergeJsonPlugin {
 
             const minify = (this.options.minify === true) || (this.options.minify === 'auto' && isProdMode);
 
-            let finalJson;
+            let finalJson = mergedJson;
             if (typeof beforeEmit === 'function') {
-              finalJson = await beforeEmit(mergedJson);
+              finalJson = await beforeEmit(finalJson);
             }
 
             if (minify) {
-              finalJson = JSON.stringify(mergedJson, null, 0);
+              finalJson = JSON.stringify(finalJson, null, 0);
             } else {
-              finalJson = JSON.stringify(mergedJson, null, 2);
+              finalJson = JSON.stringify(finalJson, null, 2);
             }
 
             const targerSrc = new RawSource(finalJson);

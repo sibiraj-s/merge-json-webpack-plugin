@@ -297,3 +297,32 @@ test('should invoke beforeEmit function', async () => {
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 });
+
+test('should be able to modify output via beforeEmit function', async () => {
+  const dirName = 'default';
+  const files = await getFiles(dirName);
+
+  const mockJson = { x: 1 };
+  const beforeEmit = jest.fn().mockResolvedValue(mockJson);
+
+  const plugins = [
+    new MergeJsonPlugin({
+      group: [{
+        files,
+        beforeEmit,
+        to: outFileName,
+      }],
+    }),
+  ];
+
+  const config = webpackConfig({ plugins });
+  const stats = await wp(config);
+
+  expect(beforeEmit).toHaveBeenCalled();
+
+  const mergedJson = JSON.parse(await fs.promises.readFile(outFilePath, 'utf8'));
+  expect(mergedJson).toMatchObject(mockJson);
+
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+});

@@ -23,6 +23,7 @@
   },
   "keywords": [
     "json-merge",
+    "merge-json-webpack-plugin",
     "webpack-plugin"
   ],
   "peerDependencies": {

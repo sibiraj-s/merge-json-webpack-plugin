@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 > - Internal
 > - Unreleased
 
+## v1.1.1 (2020-07-14)
+
+#### Bug Fixes
+
+- use correct json returned from `beforeEmit` function ([87ad4da](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/87ad4da))
+
 ## v1.1.0 (2020-07-14)
 
 #### Features

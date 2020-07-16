@@ -1,25 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-const webpack = require('webpack');
 const glob = require('fast-glob');
 const _ = require('lodash');
 
 const MergeJsonPlugin = require('..');
-const webpackConfig = require('./fixtures/webpack.config');
+const getCompiler = require('./helpers/getCompiler');
+const compile = require('./helpers/compile');
 
 const fixturesDir = path.resolve(__dirname, 'fixtures');
 const outFileName = 'merged.json';
-const outFilePath = path.resolve(__dirname, 'dist', outFileName);
-
-const wp = (config) => new Promise((resolve, reject) => {
-  webpack(config).run((err, stats) => {
-    if (err) {
-      return reject(err);
-    }
-
-    setTimeout(() => resolve(stats), 100);
-  });
-});
+const outFilePath = path.resolve(fixturesDir, 'dist', outFileName);
 
 const testDir = (d) => path.resolve(fixturesDir, d);
 
@@ -47,17 +37,17 @@ test('should merge json with basic options', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        files,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: [{
+      files,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
 
   await match(dirName);
 
@@ -69,17 +59,17 @@ test('should add to webpack stats if file does not exist', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        files: files.concat(['invalid.json']),
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: [{
+      files: files.concat(['invalid.json']),
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
 
   await match(dirName);
   expect(stats.hasErrors()).toBeTruthy();
@@ -90,17 +80,17 @@ test('should thorw errors for invalid json file', async () => {
   const dirName = 'error';
   const files = await getFiles(dirName);
 
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        files,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: [{
+      files,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
 
   expect(stats.hasErrors()).toBeTruthy();
 });
@@ -109,18 +99,19 @@ test('should merge correctly with custom merge function', async () => {
   const dirName = 'deep-merge';
   const files = await getFiles(dirName);
 
-  const plugins = [
-    new MergeJsonPlugin({
-      mergeFn: _.merge,
-      group: [{
-        files,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    mergeFn: _.merge,
+    group: [{
+      files,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 
@@ -128,58 +119,62 @@ test('should merge correctly with custom merge function', async () => {
 });
 
 test('should do nothing if group is empty', async () => {
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: [],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 });
 
 test('should do nothing if group is not an array', async () => {
-  const plugins = [
-    new MergeJsonPlugin({
-      group: null,
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: null,
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 });
 
 test('should do nothing if files is empty', async () => {
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        files: [],
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: [{
+      files: [],
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 });
 
 test('should add errors to webpack compilation if destination is not provided', async () => {
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        to: null,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: [{
+      to: null,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.warnings).toEqual([]);
   expect(stats.compilation.errors).not.toEqual([]);
   expect(stats.compilation.errors.some((e) => e.includes('Destination path is required'))).toBeTruthy();
@@ -189,18 +184,19 @@ test('should be able minify files by default', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
-  const plugins = [
-    new MergeJsonPlugin({
-      minify: true,
-      group: [{
-        files,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    minify: true,
+    group: [{
+      files,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 
@@ -212,18 +208,19 @@ test('should not minify files when specified', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
-  const plugins = [
-    new MergeJsonPlugin({
-      minify: false,
-      group: [{
-        files,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    minify: false,
+    group: [{
+      files,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 
@@ -234,17 +231,18 @@ test('should not minify files when specified', async () => {
 test('should able to read files via glob', async () => {
   const dirName = 'glob';
 
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        files: `${dirName}/*.json`,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: [{
+      files: `${dirName}/*.json`,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
   await match(dirName);
@@ -253,17 +251,18 @@ test('should able to read files via glob', async () => {
 test('should ignore files other than json by default when files selected via glob', async () => {
   const dirName = 'glob';
 
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        files: `${dirName}/*`,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const compiler = getCompiler();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  const options = {
+    group: [{
+      files: `${dirName}/*`,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
   await match(dirName);
@@ -273,22 +272,21 @@ test('should invoke beforeEmit function', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
+  const compiler = getCompiler();
   const beforeEmit = jest.fn().mockResolvedValue({});
 
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        files,
-        beforeEmit,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const options = {
+    group: [{
+      files,
+      beforeEmit,
+      to: outFileName,
+    }],
+  };
 
   const mock = jest.fn();
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
   mock();
 
   expect(beforeEmit).toHaveBeenCalled();
@@ -302,21 +300,21 @@ test('should be able to modify output via beforeEmit function', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
+  const compiler = getCompiler();
+
   const mockJson = { x: 1 };
   const beforeEmit = jest.fn().mockResolvedValue(mockJson);
 
-  const plugins = [
-    new MergeJsonPlugin({
-      group: [{
-        files,
-        beforeEmit,
-        to: outFileName,
-      }],
-    }),
-  ];
+  const options = {
+    group: [{
+      files,
+      beforeEmit,
+      to: outFileName,
+    }],
+  };
 
-  const config = webpackConfig({ plugins });
-  const stats = await wp(config);
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
 
   expect(beforeEmit).toHaveBeenCalled();
 

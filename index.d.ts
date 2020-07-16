@@ -1,4 +1,5 @@
 import { Options as GlobOptions } from 'fast-glob';
+import { Compiler } from 'webpack';
 
 type json = {} | { [key: string]: any }
 
@@ -18,6 +19,7 @@ interface Options {
 
 declare class MergeJsonPlugin {
   constructor(options: Options);
+  apply(compiler: Compiler): void
 }
 
 export = MergeJsonPlugin;

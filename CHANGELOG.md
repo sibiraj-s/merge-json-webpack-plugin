@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 > - Internal
 > - Unreleased
 
+## v1.2.0 (2020-07-19)
+
+#### Features
+
+- add schema validation ([d6ea427](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/d6ea427))
+
 ## v1.1.1 (2020-07-14)
 
 #### Bug Fixes

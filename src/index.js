@@ -33,6 +33,7 @@ class MergeJsonPlugin {
   apply (compiler) {
     const context = this.options.root || compiler.options.context;
     const isProdMode = compiler.options.mode === 'production';
+    const minify = (this.options.minify === true) || (this.options.minify === 'auto' && isProdMode);
 
     compiler.hooks.thisCompilation.tap(PLUGIN, (compilation) => {
       const logger = compilation.getLogger(PLUGIN_NAME);
@@ -86,23 +87,16 @@ class MergeJsonPlugin {
             });
 
             const f = await Promise.all(filesPromises);
-
             const mergedJson = f.reduce((acc, val) => mergeFn(acc, val), {});
 
-            const minify = (this.options.minify === true) || (this.options.minify === 'auto' && isProdMode);
+            const modifiedJson = typeof beforeEmit === 'function'
+              ? await beforeEmit(mergedJson)
+              : mergedJson;
 
-            let finalJson = mergedJson;
-            if (typeof beforeEmit === 'function') {
-              finalJson = await beforeEmit(finalJson);
-            }
+            const space = minify ? 0 : 2;
+            const formattedJson = JSON.stringify(modifiedJson, null, space);
 
-            if (minify) {
-              finalJson = JSON.stringify(finalJson, null, 0);
-            } else {
-              finalJson = JSON.stringify(finalJson, null, 2);
-            }
-
-            const targerSrc = new RawSource(finalJson);
+            const targerSrc = new RawSource(formattedJson);
             compilation.emitAsset(outputPath, targerSrc);
           });
 

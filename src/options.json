@@ -1,0 +1,69 @@
+{
+  "title": "MergeJsonPluginOptions",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "root": {
+      "description": "The directory, an absolute path, for resolving files",
+      "type": "string",
+      "minLength": 1
+    },
+    "mergeFn": {
+      "description": "A function used to merge two objects",
+      "instanceof": "Function"
+    },
+    "minify": {
+      "description": "Minify the output json",
+      "type": "boolean"
+    },
+    "group": {
+      "description": "Files to merge and destination path",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "files": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                ]
+              },
+              "beforeEmit": {
+                "instanceOf": "Function"
+              },
+              "to": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        ]
+      }
+    },
+    "globOptions": {
+      "description": "Options to forward to fast-glob",
+      "type": "object"
+    }
+  },
+  "required": [
+    "group"
+  ]
+}

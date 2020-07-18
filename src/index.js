@@ -2,7 +2,10 @@ const path = require('path');
 const fs = require('fs');
 const glob = require('fast-glob');
 
+const validate = require('schema-utils');
 const { RawSource } = require('webpack-sources');
+
+const schema = require('./options.json');
 
 const PLUGIN_NAME = 'MergeJsonPlugin';
 const PLUGIN = {
@@ -19,6 +22,11 @@ const defaultOptions = {
 
 class MergeJsonPlugin {
   constructor (options) {
+    validate(schema, options, {
+      name: PLUGIN_NAME,
+      baseDataPath: 'options',
+    });
+
     this.options = { ...defaultOptions, ...options };
   }
 
@@ -33,19 +41,11 @@ class MergeJsonPlugin {
         const { group } = this.options;
 
         logger.debug('Merging JSONs.');
-        if (!Array.isArray(group)) {
-          return;
-        }
 
         try {
           const assetsPromises = group.map(async (g) => {
             let { files } = g;
             const { to: outputPath, beforeEmit } = g;
-
-            if (!outputPath) {
-              compilation.errors.push('Destination path is required.');
-              return;
-            }
 
             if (this.options.mergeFn) {
               logger.debug('Using custom merge function.');
@@ -60,11 +60,6 @@ class MergeJsonPlugin {
                 ignore: '!(**/*.json)',
                 ...this.options.globOptions,
               });
-            }
-
-            if (!Array.isArray(files) || !files.length) {
-              logger.log('No files to merge.');
-              return;
             }
 
             const filesPromises = files.map(async (file) => {

@@ -7,19 +7,18 @@
   "repository": "https://github.com/sibiraj-s/merge-json-webpack-plugin.git",
   "bugs": "https://github.com/sibiraj-s/merge-json-webpack-plugin/issues",
   "homepage": "https://github.com/sibiraj-s/merge-json-webpack-plugin#readme",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "engines": {
     "node": ">=10"
   },
   "files": [
-    "index.js",
-    "index.d.ts"
+    "src/"
   ],
   "scripts": {
     "prepublishOnly": "npm run test",
     "lint": "eslint . --ignore-path .gitignore",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "keywords": [
     "json-merge",
@@ -31,6 +30,7 @@
   },
   "dependencies": {
     "fast-glob": "^3.2.4",
+    "schema-utils": "^2.7.0",
     "webpack-sources": "^1.4.3"
   },
   "devDependencies": {

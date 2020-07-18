@@ -3,7 +3,7 @@ const path = require('path');
 const glob = require('fast-glob');
 const _ = require('lodash');
 
-const MergeJsonPlugin = require('..');
+const MergeJsonPlugin = require('../src');
 const getCompiler = require('./helpers/getCompiler');
 const compile = require('./helpers/compile');
 
@@ -116,68 +116,6 @@ test('should merge correctly with custom merge function', async () => {
   expect(stats.compilation.warnings).toEqual([]);
 
   await match(dirName);
-});
-
-test('should do nothing if group is empty', async () => {
-  const compiler = getCompiler();
-
-  const options = {
-    group: [],
-  };
-
-  new MergeJsonPlugin(options).apply(compiler);
-  const stats = await compile(compiler);
-
-  expect(stats.compilation.errors).toEqual([]);
-  expect(stats.compilation.warnings).toEqual([]);
-});
-
-test('should do nothing if group is not an array', async () => {
-  const compiler = getCompiler();
-
-  const options = {
-    group: null,
-  };
-
-  new MergeJsonPlugin(options).apply(compiler);
-  const stats = await compile(compiler);
-
-  expect(stats.compilation.errors).toEqual([]);
-  expect(stats.compilation.warnings).toEqual([]);
-});
-
-test('should do nothing if files is empty', async () => {
-  const compiler = getCompiler();
-
-  const options = {
-    group: [{
-      files: [],
-      to: outFileName,
-    }],
-  };
-
-  new MergeJsonPlugin(options).apply(compiler);
-  const stats = await compile(compiler);
-
-  expect(stats.compilation.errors).toEqual([]);
-  expect(stats.compilation.warnings).toEqual([]);
-});
-
-test('should add errors to webpack compilation if destination is not provided', async () => {
-  const compiler = getCompiler();
-
-  const options = {
-    group: [{
-      to: null,
-    }],
-  };
-
-  new MergeJsonPlugin(options).apply(compiler);
-  const stats = await compile(compiler);
-
-  expect(stats.compilation.warnings).toEqual([]);
-  expect(stats.compilation.errors).not.toEqual([]);
-  expect(stats.compilation.errors.some((e) => e.includes('Destination path is required'))).toBeTruthy();
 });
 
 test('should be able minify files by default', async () => {

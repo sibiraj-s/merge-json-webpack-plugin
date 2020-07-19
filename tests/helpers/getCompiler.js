@@ -14,7 +14,7 @@ const getCompiler = () => {
       path: path.resolve(fixturesDir, 'dist'),
     },
     plugins: [
-      new CleanWebpackPlugin({}),
+      new CleanWebpackPlugin(),
     ],
   });
 

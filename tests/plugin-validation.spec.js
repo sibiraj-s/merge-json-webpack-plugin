@@ -1,4 +1,5 @@
 const MergeJsonPlugin = require('../src');
+const getCompiler = require('./helpers/getCompiler');
 
 const tests = [
   [
@@ -108,7 +109,8 @@ const tests = [
 
 test.each(tests)('should throw schema validation error if %s', (_, { options, expectedErrMessage }) => {
   try {
-    new MergeJsonPlugin(options) // eslint-disable-line
+    const compiler = getCompiler();
+    new MergeJsonPlugin(options).apply(compiler);
   } catch (err) {
     expect(err).toBeTruthy();
     expect(err.name).toBe('ValidationError');

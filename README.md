@@ -70,10 +70,20 @@ module.exports = {
 const MergeJsonPlugin = require('merge-json-webpack-plugin');
 const _ = require('loadsh');
 
+const customizer = (objValue, srcValue) => {
+  if (_.isArray(objValue)) {
+    return objValue.concat(srcValue);
+  }
+}
+
+const merge = (object, other) => {
+  return _.mergeWith(object, other, customizer);
+};
+
 module.exports = {
   plugins: [
     new MergeJsonPlugin({
-      mergeFn: _.merge,
+      mergeFn: merge,
     }),
     new MergeJsonPlugin({
       mergeFn: (prev, current) => Object.assign(prev, current),

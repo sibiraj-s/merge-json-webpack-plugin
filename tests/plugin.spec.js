@@ -118,6 +118,39 @@ test('should merge correctly with custom merge function', async () => {
   await match(dirName);
 });
 
+test('should deep merge arrays with custom merge function', async () => {
+  const dirName = 'deep-merge-arrays';
+  const files = await getFiles(dirName);
+
+  const compiler = getCompiler();
+
+  const customizer = (objValue, srcValue) => {
+    if (_.isArray(objValue)) {
+      return objValue.concat(srcValue);
+    }
+  };
+
+  const merge = (object, other) => {
+    return _.mergeWith(object, other, customizer);
+  };
+
+  const options = {
+    mergeFn: merge,
+    group: [{
+      files,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+
+  await match(dirName);
+});
+
 test('should be able minify files by default', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);

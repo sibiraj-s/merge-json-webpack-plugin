@@ -1,5 +1,4 @@
 extends:
-  - standard
   - plugin:jest/recommended
   - pegasus
 
@@ -7,4 +6,5 @@ plugins:
   - jest
 
 env:
+  node: true
   jest: true

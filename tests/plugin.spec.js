@@ -128,11 +128,11 @@ test('should deep merge arrays with custom merge function', async () => {
     if (_.isArray(objValue)) {
       return objValue.concat(srcValue);
     }
+
+    return undefined;
   };
 
-  const merge = (object, other) => {
-    return _.mergeWith(object, other, customizer);
-  };
+  const merge = (object, other) => _.mergeWith(object, other, customizer);
 
   const options = {
     mergeFn: merge,

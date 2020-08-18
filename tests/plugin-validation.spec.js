@@ -1,6 +1,10 @@
 const MergeJsonPlugin = require('../src');
 const getCompiler = require('./helpers/getCompiler');
 
+const dummyFunction = () => {
+  // dummy function
+};
+
 const tests = [
   [
     'group is empty',
@@ -100,7 +104,7 @@ const tests = [
     'group is not defined',
     {
       options: {
-        mergeFn: () => {},
+        mergeFn: dummyFunction,
       },
       expectedErrMessage: 'options misses the property \'group\'',
     },

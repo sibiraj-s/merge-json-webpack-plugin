@@ -55,7 +55,7 @@ test('should merge json with basic options', async () => {
   expect(stats.compilation.warnings).toEqual([]);
 });
 
-test('should add to webpack stats if file does not exist', async () => {
+test('should add errors to webpack stats if file does not exist', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
@@ -71,7 +71,6 @@ test('should add to webpack stats if file does not exist', async () => {
   new MergeJsonPlugin(options).apply(compiler);
   const stats = await compile(compiler);
 
-  await match(dirName);
   expect(stats.hasErrors()).toBeTruthy();
   expect(stats.compilation.errors.some((e) => e.message.includes('File does not exist'))).toBeTruthy();
 });

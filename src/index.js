@@ -66,9 +66,8 @@ class MergeJsonPlugin {
         const fileExists = fs.existsSync(fileAbsPath);
 
         if (!fileExists) {
-          const err = `File does not exist:${fileAbsPath}`;
-          compilation.errors.push(err);
-          return {};
+          const err = `File does not exist: ${fileAbsPath}`;
+          throw new Error(err);
         }
 
         // add file to webpack dependencies to watch

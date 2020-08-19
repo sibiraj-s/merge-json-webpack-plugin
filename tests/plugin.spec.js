@@ -73,7 +73,7 @@ test('should add to webpack stats if file does not exist', async () => {
 
   await match(dirName);
   expect(stats.hasErrors()).toBeTruthy();
-  expect(stats.compilation.errors.some((e) => e.includes('File does not exist'))).toBeTruthy();
+  expect(stats.compilation.errors.some((e) => e.message.includes('File does not exist'))).toBeTruthy();
 });
 
 test('should thorw errors for invalid json file', async () => {

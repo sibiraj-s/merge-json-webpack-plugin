@@ -40,6 +40,7 @@ test('should merge json with basic options', async () => {
   const compiler = getCompiler();
 
   const options = {
+    cwd: fixturesDir,
     group: [{
       files,
       to: outFileName,

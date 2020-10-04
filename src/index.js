@@ -8,9 +8,6 @@ const { RawSource } = require('webpack-sources');
 const schema = require('./options.json');
 
 const PLUGIN_NAME = 'MergeJsonPlugin';
-const PLUGIN = {
-  name: PLUGIN_NAME,
-};
 
 const defaultOptions = {
   cwd: null,
@@ -99,7 +96,7 @@ class MergeJsonPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.thisCompilation.tap(PLUGIN, (compilation) => {
+    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.additionalAssets.tapPromise(PLUGIN_NAME, async () => {
         try {
           await this.processJson(compiler, compilation);

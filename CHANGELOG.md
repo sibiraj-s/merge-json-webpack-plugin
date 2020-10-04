@@ -14,6 +14,21 @@ All notable changes to this project will be documented in this file.
 > - Internal
 > - Unreleased
 
+## v2.0.0 (2020-10-04)
+
+#### Enhancements
+
+- update options schema ([eade9d7](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/eade9d7))
+
+#### Dependency Updates
+
+- update dependencies ([ebd73e8](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/ebd73e8))
+- update devDependencies ([a952880](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/a952880))
+
+#### Breaking Changes
+
+- rename option `root` to `cwd` ([e23f210](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/e23f210))
+
 ## v1.2.0 (2020-07-19)
 
 #### Features

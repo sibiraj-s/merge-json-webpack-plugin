@@ -57,7 +57,7 @@ module.exports = {
 
 - **group**[`array`] - Files to merge and destination path
 
-  - **files**[`array`] or [[glob](https://github.com/mrmlnc/fast-glob)] - The order of merge is not guarenteed when glob is used.
+  - **files**[`array`] or [glob](https://github.com/mrmlnc/fast-glob)] - The order of merge is not guarenteed when glob is used.
   - **beforeEmit**[`function`] - A function called before emitting the json. The return json value is written to the output file. If the function returns a promise, it will be awaited.
   - **to**[`string`]: Destination path to write the files to.
 

@@ -3,7 +3,7 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "root": {
+    "cwd": {
       "description": "The directory, an absolute path, for resolving files",
       "type": "string",
       "minLength": 1

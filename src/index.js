@@ -13,7 +13,7 @@ const PLUGIN = {
 };
 
 const defaultOptions = {
-  root: null,
+  cwd: null,
   mergeFn: null,
   minify: 'auto',
   group: [],
@@ -31,7 +31,7 @@ class MergeJsonPlugin {
   }
 
   async processJson(compiler, compilation) {
-    const context = this.options.root || compiler.options.context;
+    const context = this.options.cwd || compiler.options.context;
     const isProdMode = compiler.options.mode === 'production';
     const minify = this.options.minify === true || (this.options.minify === 'auto' && isProdMode);
 

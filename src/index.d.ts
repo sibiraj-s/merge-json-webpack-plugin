@@ -10,7 +10,7 @@ interface GroupOptions {
 }
 
 interface Options {
-  root: string;
+  cwd: string;
   minify: boolean | 'auto';
   mergeFn: (prev: json, current: json) => json;
   group: GroupOptions[];

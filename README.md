@@ -53,7 +53,7 @@ module.exports = {
 
 ### Options
 
-- **root**[`string`] - The directory, an absolute path, for resolving files.
+- **cwd**[`string`] - The directory, an absolute path, for resolving files.
 
 - **group**[`array`] - Files to merge and destination path
 

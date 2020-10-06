@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const glob = require('fast-glob');
 
-const validate = require('schema-utils');
+const { validate } = require('schema-utils');
 const { RawSource } = require('webpack-sources');
 
 const schema = require('./options.json');

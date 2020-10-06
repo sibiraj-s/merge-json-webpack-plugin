@@ -1,3 +1,5 @@
+const { ValidationError } = require('schema-utils');
+
 const MergeJsonPlugin = require('../src');
 const getCompiler = require('./helpers/getCompiler');
 
@@ -117,7 +119,7 @@ test.each(tests)('should throw schema validation error if %s', (_, { options, ex
     new MergeJsonPlugin(options).apply(compiler);
   } catch (err) {
     expect(err).toBeTruthy();
-    expect(err.name).toBe('ValidationError');
+    expect(err).toBeInstanceOf(ValidationError);
     expect(err.message).toContain(expectedErrMessage);
   }
 });

@@ -38,7 +38,7 @@ module.exports = {
             'common-manifest.json',
             'firefox-manifest.json'
           ],
-          beforeEmit: (outputJson) => outputJson
+          beforeEmit: (outputJson) => outputJson,
           to: 'manifest.json',
         },
         {

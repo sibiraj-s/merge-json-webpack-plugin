@@ -88,8 +88,8 @@ class MergeJsonPlugin {
       const space = minify ? 0 : 2;
       const formattedJson = JSON.stringify(modifiedJson, null, space);
 
-      const targerSrc = new RawSource(formattedJson);
-      compilation.emitAsset(outputPath, targerSrc);
+      const data = new RawSource(formattedJson);
+      compilation.emitAsset(outputPath, data);
     });
 
     await Promise.all(assetsPromises);

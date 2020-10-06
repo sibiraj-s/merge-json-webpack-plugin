@@ -14,6 +14,18 @@ All notable changes to this project will be documented in this file.
 > - Internal
 > - Unreleased
 
+## v3.0.0 (2020-10-06)
+
+#### Dependency Updates
+
+- update schema-utils to v3 ([39f2164](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/39f2164))
+- update devDependencies ([7479e2b](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/7479e2b))
+
+#### Breaking Changes
+
+- minimum required Node.js version is `v10.13.0`
+- minimum webpack version is `v4.40.0`
+
 ## v2.0.0 (2020-10-04)
 
 #### Enhancements

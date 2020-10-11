@@ -14,6 +14,20 @@ All notable changes to this project will be documented in this file.
 > - Internal
 > - Unreleased
 
+## v4.0.0 (2020-10-11)
+
+#### Features
+
+- support webpack 5 ([a59e062](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/a59e062))
+
+#### Enhancements
+
+- remove webpack-sources dependency ([a59e062](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/a59e062))
+
+#### Breaking Changes
+
+- drop webpack 4 support
+
 ## v3.0.0 (2020-10-06)
 
 #### Dependency Updates

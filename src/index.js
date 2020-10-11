@@ -3,7 +3,7 @@ const fs = require('fs');
 const glob = require('fast-glob');
 
 const { validate } = require('schema-utils');
-const { RawSource } = require('webpack-sources');
+const { sources } = require('webpack');
 
 const schema = require('./options.json');
 
@@ -88,7 +88,7 @@ class MergeJsonPlugin {
       const space = minify ? 0 : 2;
       const formattedJson = JSON.stringify(modifiedJson, null, space);
 
-      const data = new RawSource(formattedJson);
+      const data = new sources.RawSource(formattedJson);
       compilation.emitAsset(outputPath, data);
     });
 

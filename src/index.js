@@ -4,6 +4,7 @@ const glob = require('fast-glob');
 
 const { validate } = require('schema-utils');
 const { sources } = require('webpack');
+const { interpolateName } = require('loader-utils');
 
 const schema = require('./options.json');
 
@@ -89,7 +90,12 @@ class MergeJsonPlugin {
       const formattedJson = JSON.stringify(modifiedJson, null, space);
 
       const data = new sources.RawSource(formattedJson);
-      compilation.emitAsset(outputPath, data);
+
+      const assetName = interpolateName({}, outputPath, {
+        content: formattedJson,
+      });
+
+      compilation.emitAsset(assetName, data);
     });
 
     await Promise.all(assetsPromises);

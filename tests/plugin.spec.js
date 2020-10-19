@@ -8,8 +8,9 @@ const getCompiler = require('./helpers/getCompiler');
 const compile = require('./helpers/compile');
 
 const fixturesDir = path.resolve(__dirname, 'fixtures');
+const distDir = path.resolve(fixturesDir, 'dist');
 const outFileName = 'merged.json';
-const outFilePath = path.resolve(fixturesDir, 'dist', outFileName);
+const outFilePath = path.resolve(distDir, outFileName);
 
 const testDir = (d) => path.resolve(fixturesDir, d);
 
@@ -294,4 +295,28 @@ test('should be able to modify output via beforeEmit function', async () => {
 
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
+});
+
+test('should interpolate name correctly', async () => {
+  const dirName = 'default';
+  const files = await getFiles(dirName);
+
+  const compiler = getCompiler();
+
+  const options = {
+    cwd: fixturesDir,
+    group: [{
+      files,
+      to: 'merged-[contenthash].json',
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+
+  const distFiles = await glob('merged-[a-z0-9]*.json', { cwd: distDir });
+  expect(distFiles.length).toBe(1);
 });

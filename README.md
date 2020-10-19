@@ -43,7 +43,7 @@ module.exports = {
         },
         {
           files: '*.json', // glob. see https://github.com/mrmlnc/fast-glob
-          to: 'merged.json',
+          to: 'merged-[contenthash].json',
         },
       ],
     }),

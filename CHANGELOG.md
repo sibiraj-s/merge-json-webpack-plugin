@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 > - Internal
 > - Unreleased
 
+## v4.1.0 (2020-10-19)
+
+#### Features
+
+- support outputname interpolation ([112cb45](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/112cb45))
+
 ## v4.0.0 (2020-10-11)
 
 #### Features

@@ -111,6 +111,20 @@ const tests = [
       expectedErrMessage: 'options misses the property \'group\'',
     },
   ],
+  [
+    'force is not boolean',
+    {
+      options: {
+        force: '',
+        group: [{
+          unknownProp: '',
+          files: ['file'],
+          to: 'outPath',
+        }],
+      },
+      expectedErrMessage: 'force should be a boolean',
+    },
+  ],
 ];
 
 test.each(tests)('should throw schema validation error if %s', (_, { options, expectedErrMessage }) => {

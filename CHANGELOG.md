@@ -14,6 +14,17 @@ All notable changes to this project will be documented in this file.
 > - Internal
 > - Unreleased
 
+## v4.2.0 (2020-10-21)
+
+#### Features
+
+- add `force` option to overwrites files already in compilation.assets ([7a31a42](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/7a31a42))
+- add `immutable` and `minimized` properties to output asset info ([c61e2c0](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/c61e2c0))
+
+#### Bug Fixes
+
+- don't overrite files already in compilation.assets ([7a31a42](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/7a31a42))
+
 ## v4.1.0 (2020-10-19)
 
 #### Features

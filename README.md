@@ -32,6 +32,7 @@ const MergeJsonPlugin = require('merge-json-webpack-plugin');
 module.exports = {
   plugins: [
     new MergeJsonPlugin({
+      force: false,
       group: [
         {
           files: [
@@ -63,7 +64,9 @@ module.exports = {
 
 - **minify**[`boolean`] - Minify the output json. Enabled by default in production mode.
 
-- **mergeFn**[`function`] - A function used to merge two objects. Default is `Object.assign`
+- **mergeFn**[`function`] - A function used to merge two objects. Defaults to `Object.assign`.
+
+- **force**[`boolean`] - Overwrites files already in compilation.assets (usually added by other plugins/loaders). Disabled by default.
 
 ```js
 // webpack.config.js

@@ -9,7 +9,7 @@
       "minLength": 1
     },
     "force": {
-      "description": "Override file that already exist in compilatation",
+      "description": "Overwrites files already in compilation.assets",
       "type": "boolean"
     },
     "mergeFn": {

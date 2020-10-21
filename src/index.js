@@ -12,10 +12,11 @@ const PLUGIN_NAME = 'MergeJsonPlugin';
 
 const defaultOptions = {
   cwd: null,
-  mergeFn: null,
-  minify: 'auto',
+  force: false,
   group: [],
   globOptions: {},
+  mergeFn: null,
+  minify: 'auto',
 };
 
 class MergeJsonPlugin {
@@ -32,10 +33,9 @@ class MergeJsonPlugin {
     const context = this.options.cwd || compiler.options.context;
     const isProdMode = compiler.options.mode === 'production';
     const minify = this.options.minify === true || (this.options.minify === 'auto' && isProdMode);
+    const { group, globOptions, force } = this.options;
 
     const logger = compilation.getLogger(PLUGIN_NAME);
-
-    const { group } = this.options;
 
     logger.debug('Merging JSONs.');
 
@@ -54,7 +54,7 @@ class MergeJsonPlugin {
         files = await glob(files, {
           cwd: context,
           ignore: '!(**/*.json)',
-          ...this.options.globOptions,
+          ...globOptions,
         });
       }
 
@@ -95,7 +95,20 @@ class MergeJsonPlugin {
         content: formattedJson,
       });
 
+      const existingAsset = compilation.getAsset(assetName);
+
+      if (existingAsset) {
+        if (force) {
+          compilation.updateAsset(assetName, data);
+          return;
+        }
+
+        logger.warn(`Skipping file ${assetName} already exist`);
+        return;
+      }
+
       compilation.emitAsset(assetName, data);
+      logger.info(`File written to: ${assetName}`);
     });
 
     await Promise.all(assetsPromises);

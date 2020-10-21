@@ -320,3 +320,56 @@ test('should interpolate name correctly', async () => {
   const distFiles = await glob('merged-[a-z0-9]*.json', { cwd: distDir });
   expect(distFiles.length).toBe(1);
 });
+
+test('should not update the an asset if it already exists', async () => {
+  const dirName = 'default';
+  const files = await getFiles(dirName);
+
+  const compiler = getCompiler();
+
+  const options = {
+    group: [{
+      files,
+      to: outFileName,
+    }, {
+      files,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+  const statString = stats.toString({ colors: true });
+
+  await match(dirName);
+
+  expect(statString).toContain(`Skipping file ${outFileName} already exist`);
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+});
+
+test('should forcefully update the an asset if it already exists', async () => {
+  const dirName = 'default';
+  const files = await getFiles(dirName);
+
+  const compiler = getCompiler();
+
+  const options = {
+    force: true,
+    group: [{
+      files,
+      to: outFileName,
+    }, {
+      files,
+      to: outFileName,
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
+  await match(dirName);
+
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+});

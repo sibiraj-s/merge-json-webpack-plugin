@@ -8,6 +8,10 @@
       "type": "string",
       "minLength": 1
     },
+    "force": {
+      "description": "Override file that already exist in compilatation",
+      "type": "boolean"
+    },
     "mergeFn": {
       "description": "A function used to merge two objects",
       "instanceof": "Function"

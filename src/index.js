@@ -10,6 +10,10 @@ const schema = require('./options.json');
 
 const PLUGIN_NAME = 'MergeJsonPlugin';
 
+const isImmutable = (name) => {
+  return (/\[(?:(?:[^:\]]+):)?(?:hash|contenthash)(?::(?:[a-z]+\d*))?(?::(?:\d+))?\]/gi).test(name);
+};
+
 const defaultOptions = {
   cwd: null,
   force: false,
@@ -97,9 +101,14 @@ class MergeJsonPlugin {
 
       const existingAsset = compilation.getAsset(assetName);
 
+      const assetInfo = {
+        immutable: isImmutable(outputPath),
+        minimized: minify,
+      };
+
       if (existingAsset) {
         if (force) {
-          compilation.updateAsset(assetName, data);
+          compilation.updateAsset(assetName, data, assetInfo);
           return;
         }
 
@@ -107,7 +116,7 @@ class MergeJsonPlugin {
         return;
       }
 
-      compilation.emitAsset(assetName, data);
+      compilation.emitAsset(assetName, data, assetInfo);
       logger.info(`File written to: ${assetName}`);
     });
 

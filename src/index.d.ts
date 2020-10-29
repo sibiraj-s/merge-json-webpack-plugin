@@ -10,11 +10,11 @@ interface GroupOptions {
 }
 
 interface Options {
-  force?: boolean;
   cwd?: string;
+  force?: boolean;
   minify?: boolean | 'auto';
   mergeFn?: (prev: json, current: json) => json;
-  group?: GroupOptions[];
+  group: GroupOptions[];
   globOptions?: GlobOptions;
 }
 

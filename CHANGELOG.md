@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 > - Internal
 > - Unreleased
 
+## v4.2.1 (2020-10-29)
+
+#### Bug Fixes
+
+- update typings ([67f081b](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/67f081b))
+
 ## v4.2.0 (2020-10-21)
 
 #### Features

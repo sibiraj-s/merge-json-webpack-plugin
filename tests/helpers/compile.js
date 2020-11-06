@@ -4,7 +4,7 @@ const compile = (compiler) => new Promise((resolve, reject) => {
       return reject(err);
     }
 
-    return setTimeout(() => resolve(stats), 200);
+    return resolve(stats);
   });
 });
 

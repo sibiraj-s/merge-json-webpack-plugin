@@ -5,7 +5,7 @@ type json = {} | { [key: string]: any };
 
 interface GroupOptions {
   files: string[] | string;
-  beforeEmit?: (outputJson: json) => json;
+  transform?: (outputJson: json) => json;
   to: string;
 }
 

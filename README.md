@@ -39,7 +39,7 @@ module.exports = {
             'common-manifest.json',
             'firefox-manifest.json'
           ],
-          beforeEmit: (outputJson) => outputJson,
+          transform: (outputJson) => outputJson,
           to: 'manifest.json',
         },
         {
@@ -59,7 +59,7 @@ module.exports = {
 - **group**[`array`] - Files to merge and destination path
 
   - **files**[`array`] or [[glob](https://github.com/mrmlnc/fast-glob)] - The order of merge is not guarenteed when glob is used.
-  - **beforeEmit**[`function`] - A function called before emitting the json. The return json value is written to the output file. If the function returns a promise, it will be awaited.
+  - **transform**[`function`] - A function to modify the merged json contents. The return json value is written to the output file. If the function returns a promise, it will be awaited.
   - **to**[`string`]: Destination path to write the files to.
 
 - **minify**[`boolean`] - Minify the output json. Enabled by default in production mode.

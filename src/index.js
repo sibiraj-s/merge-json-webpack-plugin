@@ -44,9 +44,9 @@ class MergeJsonPlugin {
 
     logger.debug('Merging JSONs.');
 
-    const assetsPromises = group.map(async (g) => {
-      let { files } = g;
-      const { to: outputPath, beforeEmit } = g;
+    const assetsPromises = group.map(async (item) => {
+      let { files } = item;
+      const { to: outputPath, transform } = item;
 
       if (this.options.mergeFn) {
         logger.debug('Using custom merge function.');
@@ -87,8 +87,8 @@ class MergeJsonPlugin {
       const f = await Promise.all(filesPromises);
       const mergedJson = f.reduce((acc, val) => mergeFn(acc, val), {});
 
-      const modifiedJson = typeof beforeEmit === 'function'
-        ? await beforeEmit(mergedJson)
+      const modifiedJson = typeof transform === 'function'
+        ? await transform(mergedJson)
         : mergedJson;
 
       const space = minify ? 0 : 2;

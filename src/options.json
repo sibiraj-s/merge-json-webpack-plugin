@@ -44,7 +44,7 @@
               }
             ]
           },
-          "beforeEmit": {
+          "transform": {
             "instanceOf": "Function"
           },
           "to": {

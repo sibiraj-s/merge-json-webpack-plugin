@@ -240,17 +240,17 @@ test('should ignore files other than json by default when files selected via glo
   await match(dirName);
 });
 
-test('should invoke beforeEmit function', async () => {
+test('should invoke transform function', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
   const compiler = getCompiler();
-  const beforeEmit = jest.fn().mockResolvedValue({});
+  const transform = jest.fn().mockResolvedValue({});
 
   const options = {
     group: [{
       files,
-      beforeEmit,
+      transform,
       to: outFileName,
     }],
   };
@@ -261,26 +261,26 @@ test('should invoke beforeEmit function', async () => {
   const stats = await compile(compiler);
   mock();
 
-  expect(beforeEmit).toHaveBeenCalled();
-  expect(beforeEmit).toHaveBeenCalledBefore(mock);
+  expect(transform).toHaveBeenCalled();
+  expect(transform).toHaveBeenCalledBefore(mock);
 
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 });
 
-test('should be able to modify output via beforeEmit function', async () => {
+test('should be able to modify output via transform function', async () => {
   const dirName = 'default';
   const files = await getFiles(dirName);
 
   const compiler = getCompiler();
 
   const mockJson = { x: 1 };
-  const beforeEmit = jest.fn().mockResolvedValue(mockJson);
+  const transform = jest.fn().mockResolvedValue(mockJson);
 
   const options = {
     group: [{
       files,
-      beforeEmit,
+      transform,
       to: outFileName,
     }],
   };
@@ -288,7 +288,7 @@ test('should be able to modify output via beforeEmit function', async () => {
   new MergeJsonPlugin(options).apply(compiler);
   const stats = await compile(compiler);
 
-  expect(beforeEmit).toHaveBeenCalled();
+  expect(transform).toHaveBeenCalled();
 
   const mergedJson = JSON.parse(await fs.promises.readFile(outFilePath, 'utf8'));
   expect(mergedJson).toMatchObject(mockJson);

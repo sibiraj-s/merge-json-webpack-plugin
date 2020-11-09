@@ -77,7 +77,7 @@ const customizer = (objValue, srcValue) => {
   if (_.isArray(objValue)) {
     return objValue.concat(srcValue);
   }
-}
+};
 
 const merge = (object, other) => {
   return _.mergeWith(object, other, customizer);

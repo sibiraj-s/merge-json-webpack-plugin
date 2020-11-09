@@ -12,7 +12,18 @@ All notable changes to this project will be documented in this file.
 > - Breaking Changes
 > - Documentation
 > - Internal
+> - Refactor
 > - Unreleased
+
+## v5.0.0 (2020-11-09)
+
+#### Refactor
+
+- prefer `processAssets` hook ([17df72a](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/17df72a))
+
+#### Breaking Changes
+
+- rename `beforeEmit` option to `transform` ([b4ed32d](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/b4ed32d))
 
 ## v4.2.1 (2020-10-29)
 

@@ -4,6 +4,7 @@
 [![License](https://badgen.net/github/license/sibiraj-s/merge-json-webpack-plugin)](https://github.com/sibiraj-s/merge-json-webpack-plugin)
 [![Version](https://badgen.net/npm/v/merge-json-webpack-plugin)](https://npmjs.com/merge-json-webpack-plugin)
 [![Node Version](https://badgen.net/npm/node/merge-json-webpack-plugin)](https://npmjs.com/merge-json-webpack-plugin)
+[![Webpack Version](https://badgen.net/badge/webpack/%3E=5/orange)](https://webpack.js.org/)
 
 > Webpack plugin to merge multiple json files into one
 

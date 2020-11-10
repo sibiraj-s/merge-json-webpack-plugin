@@ -67,8 +67,6 @@ module.exports = {
 
 - **mergeFn**[`function`] - A function used to merge two objects. Defaults to `Object.assign`.
 
-- **force**[`boolean`] - Overwrites files already in compilation.assets (usually added by other plugins/loaders). Disabled by default.
-
 ```js
 // webpack.config.js
 const MergeJsonPlugin = require('merge-json-webpack-plugin');
@@ -95,5 +93,7 @@ module.exports = {
   ],
 };
 ```
+
+- **force**[`boolean`] - Overwrites files already in compilation.assets (usually added by other plugins/loaders). Disabled by default.
 
 - **globOptions[`GlobOptions`]** - Options to foward to `fast-glob` when glob is used otherwise ignored. See https://github.com/mrmlnc/fast-glob#options-3.

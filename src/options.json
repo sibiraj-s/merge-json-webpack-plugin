@@ -27,6 +27,10 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+          "files",
+          "to"
+        ],
         "properties": {
           "files": {
             "oneOf": [

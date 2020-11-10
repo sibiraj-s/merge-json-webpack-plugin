@@ -15,6 +15,12 @@ All notable changes to this project will be documented in this file.
 > - Refactor
 > - Unreleased
 
+## v5.0.1 (2020-11-10)
+
+#### Bug Fixes
+
+- allow concating arrays in json ([32d2d8c](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/32d2d8c))
+
 ## v5.0.0 (2020-11-09)
 
 #### Refactor

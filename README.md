@@ -96,4 +96,4 @@ module.exports = {
 
 - **force**[`boolean`] - Overwrites files already in compilation.assets (usually added by other plugins/loaders). Disabled by default.
 
-- **globOptions[`GlobOptions`]** - Options to foward to `fast-glob` when glob is used otherwise ignored. See https://github.com/mrmlnc/fast-glob#options-3.
+- **globOptions**[`GlobOptions`] - Options to foward to `fast-glob` when glob is used otherwise ignored. See https://github.com/mrmlnc/fast-glob#options-3.

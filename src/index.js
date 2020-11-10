@@ -85,7 +85,7 @@ class MergeJsonPlugin {
       });
 
       const f = await Promise.all(filesPromises);
-      const mergedJson = f.reduce((acc, val) => mergeFn(acc, val), {});
+      const mergedJson = f.reduce((acc, val) => mergeFn(acc, val));
 
       const modifiedJson = typeof transform === 'function'
         ? await transform(mergedJson)

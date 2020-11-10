@@ -373,3 +373,27 @@ test('should forcefully update the an asset if it already exists', async () => {
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 });
+
+test('should be able to concat arrays', async () => {
+  const dirName = 'concat-arrays';
+  const files = await getFiles(dirName);
+
+  const compiler = getCompiler();
+
+  const options = {
+    force: true,
+    group: [{
+      files,
+      to: outFileName,
+    }],
+    mergeFn: (prev, current) => prev.concat(current),
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
+  await match(dirName);
+
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+});

@@ -15,6 +15,12 @@ All notable changes to this project will be documented in this file.
 > - Refactor
 > - Unreleased
 
+## v5.0.1 (2020-12-01)
+
+#### Bug Fixes
+
+- update glob ignore pattern ([2ffff1f](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/2ffff1f))
+
 ## v5.0.1 (2020-11-10)
 
 #### Bug Fixes

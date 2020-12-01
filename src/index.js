@@ -58,7 +58,7 @@ class MergeJsonPlugin {
       if (mayBeGlob) {
         files = await glob(files, {
           cwd: context,
-          ignore: '!(**/*.json)',
+          ignore: '**/*.!(json)',
           ...globOptions,
         });
       }

@@ -15,7 +15,13 @@ All notable changes to this project will be documented in this file.
 > - Refactor
 > - Unreleased
 
-## v5.0.1 (2020-12-01)
+## v5.0.3 (2020-12-14)
+
+#### Internal
+
+- update LICENSE ([ce4a59c](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/ce4a59c))
+
+## v5.0.2 (2020-12-01)
 
 #### Bug Fixes
 

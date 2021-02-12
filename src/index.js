@@ -3,13 +3,11 @@ const fs = require('fs');
 const glob = require('fast-glob');
 
 const { validate } = require('schema-utils');
-const { sources, Compilation } = require('webpack');
 const { interpolateName } = require('loader-utils');
 
 const schema = require('./options.json');
 
 const PLUGIN_NAME = 'MergeJsonPlugin';
-const { RawSource } = sources;
 
 const isImmutable = (name) => {
   return (/\[(?:(?:[^:\]]+):)?(?:hash|contenthash)(?::(?:[a-z]+\d*))?(?::(?:\d+))?\]/gi).test(name);
@@ -35,6 +33,8 @@ class MergeJsonPlugin {
   }
 
   async processJson(compiler, compilation) {
+    const { sources: { RawSource } } = compiler.webpack;
+
     const context = this.options.cwd || compiler.options.context;
     const isProdMode = compiler.options.mode === 'production';
     const minify = this.options.minify === true || (this.options.minify === 'auto' && isProdMode);
@@ -125,6 +125,8 @@ class MergeJsonPlugin {
   }
 
   apply(compiler) {
+    const { Compilation } = compiler.webpack;
+
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {

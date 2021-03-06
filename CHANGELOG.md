@@ -15,6 +15,17 @@ All notable changes to this project will be documented in this file.
 > - Refactor
 > - Unreleased
 
+## v5.1.0 (2021-03-06)
+
+#### Dependency Updates
+
+- update fast-glob to v3.2.5 ([63fcaf9](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/63fcaf9))
+
+#### Refactor
+
+- drop loader-utils dependency ([27d95e3](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/27d95e3))
+- use modules provided by compiler ([7ec61db](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/7ec61db))
+
 ## v5.0.3 (2020-12-14)
 
 #### Internal

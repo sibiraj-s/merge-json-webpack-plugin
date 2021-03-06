@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "fast-glob": "^3.2.5",
-    "loader-utils": "^2.0.0",
     "schema-utils": "^3.0.0"
   },
   "devDependencies": {

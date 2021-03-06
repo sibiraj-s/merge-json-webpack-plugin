@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 const fixturesDir = path.resolve(__dirname, '..', 'fixtures');
 
-const getCompiler = () => {
+const getCompiler = (outputOptions = {}) => {
   const compiler = webpack({
     context: fixturesDir,
     mode: 'production',
@@ -12,6 +12,7 @@ const getCompiler = () => {
     output: {
       clean: true,
       path: path.resolve(fixturesDir, 'dist'),
+      ...outputOptions,
     },
   });
 

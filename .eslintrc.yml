@@ -6,5 +6,10 @@ extends:
 plugins:
   - jest
 
+rules:
+  max-statements:
+    - error
+    - 50
+
 env:
   jest: true

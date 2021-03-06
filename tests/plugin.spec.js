@@ -317,6 +317,36 @@ test('should interpolate name correctly', async () => {
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 
+  expect(stats.compilation.assets).toMatchSnapshot();
+
+  const distFiles = await glob('merged-[a-z0-9]*.json', { cwd: distDir });
+  expect(distFiles.length).toBe(1);
+});
+
+test('should interpolate name correctly with hashSalt', async () => {
+  const dirName = 'default';
+  const files = await getFiles(dirName);
+
+  const compiler = getCompiler({
+    hashSalt: 'salt',
+  });
+
+  const options = {
+    cwd: fixturesDir,
+    group: [{
+      files,
+      to: 'merged-[contenthash].json',
+    }],
+  };
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+
+  expect(stats.compilation.assets).toMatchSnapshot();
+
   const distFiles = await glob('merged-[a-z0-9]*.json', { cwd: distDir });
   expect(distFiles.length).toBe(1);
 });

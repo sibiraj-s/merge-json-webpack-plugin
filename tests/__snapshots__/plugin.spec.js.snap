@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should interpolate name correctly 1`] = `
+Object {
+  "main.js": SizeOnlySource {
+    "_size": 0,
+  },
+  "merged-1109eb289dea763d17b4.json": SizeOnlySource {
+    "_size": 35,
+  },
+}
+`;
+
+exports[`should interpolate name correctly with hashSalt 1`] = `
+Object {
+  "main.js": SizeOnlySource {
+    "_size": 0,
+  },
+  "merged-1109eb289dea763d17b4.json": SizeOnlySource {
+    "_size": 35,
+  },
+}
+`;

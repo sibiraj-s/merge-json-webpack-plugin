@@ -1,17 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 const glob = require('fast-glob');
-
 const { validate } = require('schema-utils');
-const { interpolateName } = require('loader-utils');
 
 const schema = require('./options.json');
 
 const PLUGIN_NAME = 'MergeJsonPlugin';
-
-const isImmutable = (name) => {
-  return (/\[(?:(?:[^:\]]+):)?(?:hash|contenthash)(?::(?:[a-z]+\d*))?(?::(?:\d+))?\]/gi).test(name);
-};
+const TEMPLATE_REGEX = /\[\\*(?:[\w:]+)\\*\]/i;
 
 const defaultOptions = {
   cwd: null,
@@ -94,22 +89,55 @@ class MergeJsonPlugin {
       const space = minify ? 0 : 2;
       const formattedJson = JSON.stringify(modifiedJson, null, space);
 
-      const data = new RawSource(formattedJson);
+      const output = new RawSource(formattedJson);
 
-      const assetName = interpolateName({}, outputPath, {
-        content: formattedJson,
-      });
+      let assetName = outputPath;
+      let assetInfo = {};
+
+      if (TEMPLATE_REGEX.test(outputPath)) {
+        const { outputOptions } = compilation;
+
+        const {
+          hashDigest,
+          hashDigestLength,
+          hashFunction,
+          hashSalt,
+        } = outputOptions;
+
+        const hash = compiler.webpack.util.createHash(hashFunction);
+
+        if (hashSalt) {
+          hash.update(hashSalt);
+        }
+
+        hash.update(output.source());
+
+        const fullContentHash = hash.digest(hashDigest);
+        const contentHash = fullContentHash.slice(0, hashDigestLength);
+
+        const pathData = {
+          contentHash,
+          chunk: {
+            hash: contentHash,
+            contentHash,
+          },
+        };
+
+        const { path: interpolatedName, info } = compilation.getPathWithInfo(
+          outputPath,
+          pathData,
+        );
+
+        assetName = interpolatedName;
+        assetInfo = { ...info };
+      }
 
       const existingAsset = compilation.getAsset(assetName);
-
-      const assetInfo = {
-        immutable: isImmutable(outputPath),
-        minimized: minify,
-      };
+      assetInfo.minimized = minify;
 
       if (existingAsset) {
         if (force) {
-          compilation.updateAsset(assetName, data, assetInfo);
+          compilation.updateAsset(assetName, output, assetInfo);
           return;
         }
 
@@ -117,7 +145,7 @@ class MergeJsonPlugin {
         return;
       }
 
-      compilation.emitAsset(assetName, data, assetInfo);
+      compilation.emitAsset(assetName, output, assetInfo);
       logger.info(`File written to: ${assetName}`);
     });
 

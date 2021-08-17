@@ -44,7 +44,7 @@ module.exports = {
           to: 'manifest.json',
         },
         {
-          files: '*.json', // glob. see https://github.com/mrmlnc/fast-glob
+          pattern: '*.json', // glob. see https://github.com/mrmlnc/fast-glob
           to: 'merged-[contenthash].json',
         },
       ],
@@ -59,10 +59,11 @@ module.exports = {
 
 - **group**[`array`] - Files to merge and destination path
 
-  - **files**[`string`] - The order of merge is guarenteed.
-  - **pattern**[`array`] or [`string`] - [[Fast-Glob](https://github.com/mrmlnc/fast-glob)] pattern matching. The order of merge is not guarenteed when glob is used.
+  - **files**[`string`] - Array of files, path resolved relative to `cwd`.
+  - **pattern**[`string[]`] or [`string`] - [[Fast-Glob](https://github.com/mrmlnc/fast-glob)] pattern matching. The order of merge is not guarenteed.
   - **transform**[`function`] - A function to modify the merged json contents. The return json value is written to the output file. If the function returns a promise, it will be awaited.
   - **to**[`string`]: Destination path to write the files to.
+  - **globOptions**[`GlobOptions`] - Options to foward to `fast-glob` when glob is used otherwise ignored. See https://github.com/mrmlnc/fast-glob#options-3.
 
 - **minify**[`boolean`] - Minify the output json. Enabled by default in production mode.
 

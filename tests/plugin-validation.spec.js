@@ -51,6 +51,30 @@ const tests = [
     },
   ],
   [
+    'pattern is empty',
+    {
+      options: {
+        group: [{
+          pattern: [],
+          to: 'outpath',
+        }],
+      },
+      expectedErrMessage: 'pattern should be a non-empty array',
+    },
+  ],
+  [
+    'pattern has an empty string',
+    {
+      options: {
+        group: [{
+          pattern: ['fastglob', ''],
+          to: 'outpath',
+        }],
+      },
+      expectedErrMessage: 'pattern\\[1\\] should be a non-empty string',
+    },
+  ],
+  [
     'destination is not provided',
     {
       options: {

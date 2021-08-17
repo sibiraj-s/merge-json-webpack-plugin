@@ -4,7 +4,8 @@ import { Compiler } from 'webpack';
 type json = {} | { [key: string]: any };
 
 interface GroupOptions {
-  files: string[] | string;
+  pattern?: string[] | string;
+  files?: string[];
   transform?: (outputJson: json) => json;
   to: string;
 }

@@ -14,7 +14,7 @@ const tests = [
       options: {
         group: [],
       },
-      expectedErrMessage: 'group should be an non-empty array',
+      expectedErrMessage: 'group should be a non-empty array',
     },
   ],
   [
@@ -35,7 +35,7 @@ const tests = [
           to: 'outpath',
         }],
       },
-      expectedErrMessage: 'files should be an non-empty array',
+      expectedErrMessage: 'files should be a non-empty array',
     },
   ],
   [
@@ -47,7 +47,7 @@ const tests = [
           to: 'outpath',
         }],
       },
-      expectedErrMessage: 'files[1] should be an non-empty string',
+      expectedErrMessage: 'files\\[1\\] should be a non-empty string',
     },
   ],
   [
@@ -83,7 +83,7 @@ const tests = [
           to: '',
         }],
       },
-      expectedErrMessage: 'to should be an non-empty string',
+      expectedErrMessage: 'to should be a non-empty string',
     },
   ],
   [
@@ -109,7 +109,7 @@ const tests = [
           to: 'outPath',
         }],
       },
-      expectedErrMessage: 'options.group[0] has an unknown property \'unknownProp\'',
+      expectedErrMessage: 'options.group\\[0\\] has an unknown property \'unknownProp\'',
     },
   ],
   [
@@ -152,12 +152,11 @@ const tests = [
 ];
 
 test.each(tests)('should throw schema validation error if %s', (_, { options, expectedErrMessage }) => {
-  try {
+  const t = () => {
     const compiler = getCompiler();
     new MergeJsonPlugin(options).apply(compiler);
-  } catch (err) {
-    expect(err).toBeTruthy();
-    expect(err).toBeInstanceOf(ValidationError);
-    expect(err.message).toContain(expectedErrMessage);
-  }
+  };
+
+  expect(t).toThrowError(ValidationError);
+  expect(t).toThrowWithMessage(Error, new RegExp(expectedErrMessage));
 });

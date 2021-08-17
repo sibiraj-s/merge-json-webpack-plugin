@@ -59,7 +59,7 @@ const tests = [
           to: 'outpath',
         }],
       },
-      expectedErrMessage: 'pattern should be an non-empty array',
+      expectedErrMessage: 'pattern should be a non-empty array',
     },
   ],
   [
@@ -67,11 +67,11 @@ const tests = [
     {
       options: {
         group: [{
-          pattern: ['pattern', ''],
+          pattern: ['fastglob', ''],
           to: 'outpath',
         }],
       },
-      expectedErrMessage: 'pattern[1] should be an non-empty string',
+      expectedErrMessage: 'pattern\\[1\\] should be a non-empty string',
     },
   ],
   [

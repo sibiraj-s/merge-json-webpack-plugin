@@ -7,6 +7,7 @@ interface GroupOptions {
   files: string[] | string;
   transform?: (outputJson: json) => json;
   to: string;
+  forceGlob?: boolean;
 }
 
 interface Options {

@@ -62,6 +62,7 @@ module.exports = {
   - **files**[`array`] or [[glob](https://github.com/mrmlnc/fast-glob)] - The order of merge is not guarenteed when glob is used.
   - **transform**[`function`] - A function to modify the merged json contents. The return json value is written to the output file. If the function returns a promise, it will be awaited.
   - **to**[`string`]: Destination path to write the files to.
+  - **foceGlob**[`boolean`]: Force using [[glob](https://github.com/mrmlnc/fast-glob)] with **files** even if an array is given.
 
 - **minify**[`boolean`] - Minify the output json. Enabled by default in production mode.
 

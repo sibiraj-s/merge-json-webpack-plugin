@@ -54,6 +54,10 @@
           "to": {
             "type": "string",
             "minLength": 1
+          },
+          "forceGlob": {
+            "description": "Force files to use fast-glob pattern (even for arrays)",
+            "type": "boolean"
           }
         }
       }

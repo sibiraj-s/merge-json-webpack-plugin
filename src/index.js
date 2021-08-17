@@ -49,7 +49,7 @@ class MergeJsonPlugin {
 
       const mergeFn = this.options.mergeFn || Object.assign;
 
-      let filesToMerge = [];
+      let filesToMerge = pattern ? [] : files;
 
       if (pattern) {
         filesToMerge = await glob(pattern, {
@@ -57,8 +57,6 @@ class MergeJsonPlugin {
           ignore: '**/*.!(json)',
           ...item.globOptions || globOptions,
         });
-      } else {
-        filesToMerge = files.map((file) => (path.isAbsolute(file) ? file : path.resolve(context, file)));
       }
 
       const filesPromises = filesToMerge.map(async (file) => {

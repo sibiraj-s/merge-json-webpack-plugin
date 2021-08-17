@@ -1,5 +1,6 @@
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
+
 const glob = require('fast-glob');
 const _ = require('lodash');
 
@@ -29,8 +30,8 @@ const match = async (dirName) => {
   const dir = testDir(dirName);
 
   const expectedFilePath = path.resolve(dir, 'expected.json');
-  const exptectedJson = JSON.parse(await fs.promises.readFile(expectedFilePath, 'utf8'));
-  const mergedJson = JSON.parse(await fs.promises.readFile(outFilePath, 'utf8'));
+  const exptectedJson = JSON.parse(await fs.readFile(expectedFilePath, 'utf8'));
+  const mergedJson = JSON.parse(await fs.readFile(outFilePath, 'utf8'));
   expect(exptectedJson).toMatchObject(mergedJson);
 };
 
@@ -172,7 +173,7 @@ test('should be able minify files by default', async () => {
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 
-  const mergedJson = await fs.promises.readFile(outFilePath, 'utf8');
+  const mergedJson = await fs.readFile(outFilePath, 'utf8');
   expect(mergedJson.split('\n').length).toBe(1);
 });
 
@@ -196,7 +197,7 @@ test('should not minify files when specified', async () => {
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);
 
-  const mergedJson = await fs.promises.readFile(outFilePath, 'utf8');
+  const mergedJson = await fs.readFile(outFilePath, 'utf8');
   expect(mergedJson.split('\n').length).not.toBe(1);
 });
 
@@ -290,7 +291,7 @@ test('should be able to modify output via transform function', async () => {
 
   expect(transform).toHaveBeenCalled();
 
-  const mergedJson = JSON.parse(await fs.promises.readFile(outFilePath, 'utf8'));
+  const mergedJson = JSON.parse(await fs.readFile(outFilePath, 'utf8'));
   expect(mergedJson).toMatchObject(mockJson);
 
   expect(stats.compilation.errors).toEqual([]);

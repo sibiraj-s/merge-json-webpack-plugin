@@ -3,16 +3,16 @@ import { Compiler } from 'webpack';
 
 type json = {} | { [key: string]: any };
 
-interface GroupBaseOptions {
+interface GroupBase {
   transform?: (outputJson: json) => json;
   to: string;
 }
 
-interface GroupFilesOptions extends GroupBaseOptions {
+interface GroupFiles extends GroupBase {
   files: string[];
 }
 
-interface GroupPatternOptions extends GroupBaseOptions {
+interface GroupPattern extends GroupBase {
   pattern: string[] | string;
   globOptions?: GlobOptions;
 }
@@ -22,7 +22,7 @@ interface Options {
   force?: boolean;
   minify?: boolean | 'auto';
   mergeFn?: (prev: json, current: json) => json;
-  group: GroupPatternOptions[] | GroupFilesOptions[];
+  groups: GroupPattern[] | GroupFiles[];
   globOptions?: GlobOptions;
 }
 

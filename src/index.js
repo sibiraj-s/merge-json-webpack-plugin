@@ -11,7 +11,7 @@ const TEMPLATE_REGEX = /\[\\*(?:[\w:]+)\\*\]/i;
 const defaultOptions = {
   cwd: null,
   force: false,
-  group: [],
+  groups: [],
   globOptions: {},
   mergeFn: null,
   minify: 'auto',
@@ -33,15 +33,15 @@ class MergeJsonPlugin {
     const context = this.options.cwd || compiler.options.context;
     const isProdMode = compiler.options.mode === 'production';
     const minify = this.options.minify === true || (this.options.minify === 'auto' && isProdMode);
-    const { group, globOptions, force } = this.options;
+    const { groups, globOptions, force } = this.options;
 
     const logger = compilation.getLogger(PLUGIN_NAME);
 
     logger.debug('Merging JSONs.');
 
-    const assetsPromises = group.map(async (item) => {
-      const { files, pattern } = item;
-      const { to: outputPath, transform } = item;
+    const assetsPromises = groups.map(async (group) => {
+      const { files, pattern } = group;
+      const { to: outputPath, transform } = group;
 
       if (this.options.mergeFn) {
         logger.debug('Using custom merge function.');
@@ -56,7 +56,7 @@ class MergeJsonPlugin {
           cwd: context,
           ignore: '**/*.!(json)',
           absolute: true,
-          ...item.globOptions || globOptions,
+          ...group.globOptions || globOptions,
         });
       } else {
         filesToMerge = files.map((file) => (path.isAbsolute(file) ? file : path.resolve(context, file)));

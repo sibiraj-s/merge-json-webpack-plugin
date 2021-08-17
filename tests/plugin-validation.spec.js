@@ -6,28 +6,28 @@ const getCompiler = require('./helpers/getCompiler');
 
 const tests = [
   [
-    'group is empty',
+    'groups is empty',
     {
       options: {
-        group: [],
+        groups: [],
       },
-      expectedErrMessage: 'group should be a non-empty array',
+      expectedErrMessage: 'groups should be a non-empty array',
     },
   ],
   [
-    'group is not an array',
+    'groups is not an array',
     {
       options: {
-        group: null,
+        groups: null,
       },
-      expectedErrMessage: 'group should be an array',
+      expectedErrMessage: 'groups should be an array',
     },
   ],
   [
     'files is empty',
     {
       options: {
-        group: [{
+        groups: [{
           files: [],
           to: 'outpath',
         }],
@@ -39,7 +39,7 @@ const tests = [
     'files has an empty string',
     {
       options: {
-        group: [{
+        groups: [{
           files: ['file', ''],
           to: 'outpath',
         }],
@@ -51,7 +51,7 @@ const tests = [
     'pattern is empty',
     {
       options: {
-        group: [{
+        groups: [{
           pattern: [],
           to: 'outpath',
         }],
@@ -63,7 +63,7 @@ const tests = [
     'pattern has an empty string',
     {
       options: {
-        group: [{
+        groups: [{
           pattern: ['fastglob', ''],
           to: 'outpath',
         }],
@@ -75,7 +75,7 @@ const tests = [
     'destination is not provided',
     {
       options: {
-        group: [{
+        groups: [{
           files: ['file'],
           to: '',
         }],
@@ -88,7 +88,7 @@ const tests = [
     {
       options: {
         unknownProp: '',
-        group: [{
+        groups: [{
           files: ['file'],
           to: 'outPath',
         }],
@@ -97,16 +97,16 @@ const tests = [
     },
   ],
   [
-    'group has unknown properties',
+    'groups has unknown properties',
     {
       options: {
-        group: [{
+        groups: [{
           unknownProp: '',
           files: ['file'],
           to: 'outPath',
         }],
       },
-      expectedErrMessage: 'options.group\\[0\\] has an unknown property \'unknownProp\'',
+      expectedErrMessage: 'options.groups\\[0\\] has an unknown property \'unknownProp\'',
     },
   ],
   [
@@ -114,7 +114,7 @@ const tests = [
     {
       options: {
         mergeFn: '',
-        group: [{
+        groups: [{
           unknownProp: '',
           files: ['file'],
           to: 'outPath',
@@ -124,12 +124,12 @@ const tests = [
     },
   ],
   [
-    'group is not defined',
+    'groups is not defined',
     {
       options: {
         mergeFn: noop,
       },
-      expectedErrMessage: 'options misses the property \'group\'',
+      expectedErrMessage: 'options misses the property \'groups\'',
     },
   ],
   [
@@ -137,7 +137,7 @@ const tests = [
     {
       options: {
         force: '',
-        group: [{
+        groups: [{
           unknownProp: '',
           files: ['file'],
           to: 'outPath',

@@ -20,7 +20,7 @@
       "description": "Minify the output json",
       "type": "boolean"
     },
-    "group": {
+    "groups": {
       "description": "Files to merge and destination path",
       "type": "array",
       "minItems": 1,
@@ -75,6 +75,6 @@
     }
   },
   "required": [
-    "group"
+    "groups"
   ]
 }

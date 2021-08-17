@@ -34,7 +34,7 @@ module.exports = {
   plugins: [
     new MergeJsonPlugin({
       force: false,
-      group: [
+      groups: [
         {
           files: [
             'common-manifest.json',
@@ -57,7 +57,7 @@ module.exports = {
 
 - **cwd**[`string`] - The directory, an absolute path, for resolving files. Defaults to webpack [context](https://webpack.js.org/configuration/entry-context/#context)
 
-- **group**[`array`] - Files to merge and destination path
+- **groups**[`array`] - Files to merge and destination path
 
   - **files**[`string[]`] - Array of files, path resolved relative to `cwd`.
   - **pattern**[`string[]`] or [`string`] - [[Fast-Glob](https://github.com/mrmlnc/fast-glob)] pattern matching. The order of merge is not guarenteed.

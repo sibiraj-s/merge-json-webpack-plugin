@@ -43,7 +43,7 @@ test('should merge json with basic options', async () => {
 
   const options = {
     cwd: fixturesDir,
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }],
@@ -65,7 +65,7 @@ test('should add errors to webpack stats if file does not exist', async () => {
   const compiler = getCompiler();
 
   const options = {
-    group: [{
+    groups: [{
       files: files.concat(['invalid.json']),
       to: outFileName,
     }],
@@ -85,7 +85,7 @@ test('should thorw errors for invalid json file', async () => {
   const compiler = getCompiler();
 
   const options = {
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }],
@@ -105,7 +105,7 @@ test('should merge correctly with custom merge function', async () => {
 
   const options = {
     mergeFn: _.merge,
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }],
@@ -138,7 +138,7 @@ test('should deep merge arrays with custom merge function', async () => {
 
   const options = {
     mergeFn: merge,
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }],
@@ -161,7 +161,7 @@ test('should be able minify files by default', async () => {
 
   const options = {
     minify: true,
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }],
@@ -185,7 +185,7 @@ test('should not minify files when specified', async () => {
 
   const options = {
     minify: false,
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }],
@@ -207,7 +207,7 @@ test('should able to read files via glob/pattern', async () => {
   const compiler = getCompiler();
 
   const options = {
-    group: [{
+    groups: [{
       pattern: `${dirName}/*.json`,
       to: outFileName,
     }],
@@ -227,7 +227,7 @@ test('should ignore files other than json by default when pattern used (glob)', 
   const compiler = getCompiler();
 
   const options = {
-    group: [{
+    groups: [{
       pattern: `${dirName}/*`,
       to: outFileName,
     }],
@@ -249,7 +249,7 @@ test('should invoke transform function', async () => {
   const transform = jest.fn().mockResolvedValue({});
 
   const options = {
-    group: [{
+    groups: [{
       files,
       transform,
       to: outFileName,
@@ -279,7 +279,7 @@ test('should be able to modify output via transform function', async () => {
   const transform = jest.fn().mockResolvedValue(mockJson);
 
   const options = {
-    group: [{
+    groups: [{
       files,
       transform,
       to: outFileName,
@@ -306,7 +306,7 @@ test('should interpolate name correctly', async () => {
 
   const options = {
     cwd: fixturesDir,
-    group: [{
+    groups: [{
       files,
       to: 'merged-[contenthash].json',
     }],
@@ -334,7 +334,7 @@ test('should interpolate name correctly with hashSalt', async () => {
 
   const options = {
     cwd: fixturesDir,
-    group: [{
+    groups: [{
       files,
       to: 'merged-[contenthash].json',
     }],
@@ -359,7 +359,7 @@ test('should not update the an asset if it already exists', async () => {
   const compiler = getCompiler();
 
   const options = {
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }, {
@@ -387,7 +387,7 @@ test('should forcefully update the an asset if it already exists', async () => {
 
   const options = {
     force: true,
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }, {
@@ -413,7 +413,7 @@ test('should be able to concat arrays', async () => {
 
   const options = {
     force: true,
-    group: [{
+    groups: [{
       files,
       to: outFileName,
     }],

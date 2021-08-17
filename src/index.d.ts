@@ -8,6 +8,7 @@ interface GroupOptions {
   files?: string[];
   transform?: (outputJson: json) => json;
   to: string;
+  globOptions?: GlobOptions;
 }
 
 interface Options {

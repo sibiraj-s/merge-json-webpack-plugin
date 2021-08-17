@@ -40,8 +40,7 @@ class MergeJsonPlugin {
     logger.debug('Merging JSONs.');
 
     const assetsPromises = group.map(async (item) => {
-      let { files } = item;
-      const { pattern } = item;
+      const { files, pattern } = item;
       const { to: outputPath, transform } = item;
 
       if (this.options.mergeFn) {
@@ -50,15 +49,19 @@ class MergeJsonPlugin {
 
       const mergeFn = this.options.mergeFn || Object.assign;
 
+      let filesToMerge = [];
+
       if (pattern) {
-        files = await glob(pattern, {
+        filesToMerge = await glob(pattern, {
           cwd: context,
           ignore: '**/*.!(json)',
-          ...globOptions,
+          ...item.globOptions || globOptions,
         });
+      } else {
+        filesToMerge = files.map((file) => (path.isAbsolute(file) ? file : path.resolve(context, file)));
       }
 
-      const filesPromises = files.map(async (file) => {
+      const filesPromises = filesToMerge.map(async (file) => {
         const fileAbsPath = path.isAbsolute(file) ? file : path.resolve(context, file);
 
         const fileExists = fs.existsSync(fileAbsPath);

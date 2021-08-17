@@ -201,7 +201,7 @@ test('should not minify files when specified', async () => {
   expect(mergedJson.split('\n').length).not.toBe(1);
 });
 
-test('should able to read pattern via glob', async () => {
+test('should able to read files via glob/pattern', async () => {
   const dirName = 'glob';
 
   const compiler = getCompiler();

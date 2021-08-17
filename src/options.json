@@ -61,6 +61,10 @@
           "to": {
             "type": "string",
             "minLength": 1
+          },
+          "globOptions": {
+            "description": "Options to forward to fast-glob",
+            "type": "object"
           }
         }
       }

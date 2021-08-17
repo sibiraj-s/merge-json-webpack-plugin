@@ -22,7 +22,7 @@ interface Options {
   force?: boolean;
   minify?: boolean | 'auto';
   mergeFn?: (prev: json, current: json) => json;
-  group: GroupFilesOptions[] | GroupPatternOptions[];
+  group: GroupPatternOptions[] | GroupFilesOptions[];
   globOptions?: GlobOptions;
 }
 

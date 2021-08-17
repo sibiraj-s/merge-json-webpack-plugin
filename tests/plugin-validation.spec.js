@@ -1,11 +1,8 @@
 const { ValidationError } = require('schema-utils');
+const { noop } = require('lodash');
 
 const MergeJsonPlugin = require('../src');
 const getCompiler = require('./helpers/getCompiler');
-
-const dummyFunction = () => {
-  // dummy function
-};
 
 const tests = [
   [
@@ -130,7 +127,7 @@ const tests = [
     'group is not defined',
     {
       options: {
-        mergeFn: dummyFunction,
+        mergeFn: noop,
       },
       expectedErrMessage: 'options misses the property \'group\'',
     },

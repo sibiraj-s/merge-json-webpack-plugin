@@ -15,6 +15,23 @@ All notable changes to this project will be documented in this file.
 > - Refactor
 > - Unreleased
 
+## v6.0.0 (2021-08-18)
+
+#### Features
+
+- support array of globs via `groups[]pattern` ([8ffbb15](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/8ffbb15))
+
+#### Dependency Updates
+
+- update fast-glob to v3.2.7 ([b25ab9b](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/b25ab9b))
+- update schema-utils to v3.1.1 ([b25ab9b](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/b25ab9b))
+
+#### Breaking Changes
+
+- renamed `group` to `groups` ([709351d](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/709351d))
+- `groups[x]files` no longer support glob, use `pattern` instead ([8ffbb15](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/8ffbb15))
+- drop nodejs v10, minimum required version `nodejs >=12.20.0` ([e214a52](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/e214a52))
+
 ## v5.1.0 (2021-03-06)
 
 #### Dependency Updates

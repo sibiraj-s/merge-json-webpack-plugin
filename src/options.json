@@ -28,11 +28,10 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "files",
           "to"
         ],
         "properties": {
-          "files": {
+          "pattern": {
             "oneOf": [
               {
                 "type": "array",
@@ -48,16 +47,20 @@
               }
             ]
           },
+          "files": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
           "transform": {
             "instanceOf": "Function"
           },
           "to": {
             "type": "string",
             "minLength": 1
-          },
-          "forceGlob": {
-            "description": "Force files to use fast-glob pattern (even for arrays)",
-            "type": "boolean"
           }
         }
       }

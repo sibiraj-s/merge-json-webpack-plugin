@@ -11,7 +11,6 @@ const TEMPLATE_REGEX = /\[\\*(?:[\w:]+)\\*\]/i;
 const defaultOptions = {
   cwd: null,
   force: false,
-  forceGlob: false,
   group: [],
   globOptions: {},
   mergeFn: null,
@@ -42,7 +41,8 @@ class MergeJsonPlugin {
 
     const assetsPromises = group.map(async (item) => {
       let { files } = item;
-      const { to: outputPath, transform, forceGlob } = item;
+      const { pattern } = item;
+      const { to: outputPath, transform } = item;
 
       if (this.options.mergeFn) {
         logger.debug('Using custom merge function.');
@@ -50,9 +50,8 @@ class MergeJsonPlugin {
 
       const mergeFn = this.options.mergeFn || Object.assign;
 
-      const mayBeGlob = typeof files === 'string';
-      if (mayBeGlob || forceGlob) {
-        files = await glob(files, {
+      if (pattern) {
+        files = await glob(pattern, {
           cwd: context,
           ignore: '**/*.!(json)',
           ...globOptions,

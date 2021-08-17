@@ -200,14 +200,14 @@ test('should not minify files when specified', async () => {
   expect(mergedJson.split('\n').length).not.toBe(1);
 });
 
-test('should able to read files via glob', async () => {
+test('should able to read pattern via glob', async () => {
   const dirName = 'glob';
 
   const compiler = getCompiler();
 
   const options = {
     group: [{
-      files: `${dirName}/*.json`,
+      pattern: `${dirName}/*.json`,
       to: outFileName,
     }],
   };
@@ -220,14 +220,14 @@ test('should able to read files via glob', async () => {
   await match(dirName);
 });
 
-test('should ignore files other than json by default when files selected via glob', async () => {
+test('should ignore files other than json by default when pattern used (glob)', async () => {
   const dirName = 'glob';
 
   const compiler = getCompiler();
 
   const options = {
     group: [{
-      files: `${dirName}/*`,
+      pattern: `${dirName}/*`,
       to: outFileName,
     }],
   };

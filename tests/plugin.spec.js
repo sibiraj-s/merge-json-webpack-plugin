@@ -23,7 +23,7 @@ const getFiles = async (dirName) => {
     ignore: 'expected.json',
   });
 
-  return files.map((filename) => `${dir}/${filename}`);
+  return files.map((filename) => path.join(dirName, filename));
 };
 
 const match = async (dirName) => {

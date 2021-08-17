@@ -59,7 +59,7 @@ module.exports = {
 
 - **group**[`array`] - Files to merge and destination path
 
-  - **files**[`string`] - Array of files, path resolved relative to `cwd`.
+  - **files**[`string[]`] - Array of files, path resolved relative to `cwd`.
   - **pattern**[`string[]`] or [`string`] - [[Fast-Glob](https://github.com/mrmlnc/fast-glob)] pattern matching. The order of merge is not guarenteed.
   - **transform**[`function`] - A function to modify the merged json contents. The return json value is written to the output file. If the function returns a promise, it will be awaited.
   - **to**[`string`]: Destination path to write the files to.

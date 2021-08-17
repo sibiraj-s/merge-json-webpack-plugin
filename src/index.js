@@ -49,34 +49,35 @@ class MergeJsonPlugin {
 
       const mergeFn = this.options.mergeFn || Object.assign;
 
-      let filesToMerge = pattern ? [] : files;
+      let filesToMerge = [];
 
       if (pattern) {
         filesToMerge = await glob(pattern, {
           cwd: context,
           ignore: '**/*.!(json)',
+          absolute: true,
           ...item.globOptions || globOptions,
         });
+      } else {
+        filesToMerge = files.map((file) => (path.isAbsolute(file) ? file : path.resolve(context, file)));
       }
 
-      const filesPromises = filesToMerge.map(async (file) => {
-        const fileAbsPath = path.isAbsolute(file) ? file : path.resolve(context, file);
-
-        const fileExists = fs.existsSync(fileAbsPath);
+      const filesPromises = filesToMerge.map(async (filePath) => {
+        const fileExists = fs.existsSync(filePath);
 
         if (!fileExists) {
-          const err = `File does not exist: ${fileAbsPath}`;
+          const err = `File does not exist: ${filePath}`;
           throw new Error(err);
         }
 
         // add file to webpack dependencies to watch
-        compilation.fileDependencies.add(fileAbsPath);
+        compilation.fileDependencies.add(filePath);
 
         // read json
-        logger.debug('Reading file:', fileAbsPath);
-        const jsonStr = await fs.promises.readFile(fileAbsPath, 'utf-8');
+        logger.debug('Reading file:', filePath);
+        const jsonStr = await fs.promises.readFile(filePath, 'utf-8');
 
-        logger.debug('File read successfully:', fileAbsPath);
+        logger.debug('File read successfully:', filePath);
         return JSON.parse(jsonStr);
       });
 

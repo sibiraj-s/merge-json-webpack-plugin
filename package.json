@@ -10,7 +10,8 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=10.13.0",
+    "npm": ">=7.20.6"
   },
   "files": [
     "src/"

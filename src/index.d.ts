@@ -1,5 +1,5 @@
 import { Options as GlobOptions } from 'fast-glob';
-import { Compiler } from 'webpack';
+import { Compiler, WebpackPluginInstance } from 'webpack';
 
 type json = {} | { [key: string]: any };
 
@@ -26,7 +26,7 @@ interface Options {
   globOptions?: GlobOptions;
 }
 
-declare class MergeJsonPlugin {
+declare class MergeJsonPlugin implements WebpackPluginInstance {
   constructor(options: Options);
   apply(compiler: Compiler): void;
 }

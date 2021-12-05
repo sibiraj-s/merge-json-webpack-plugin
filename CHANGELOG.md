@@ -15,6 +15,16 @@ All notable changes to this project will be documented in this file.
 > - Refactor
 > - Unreleased
 
+## v6.1.0 (2021-08-18)
+
+#### Bug Fixes
+
+- update typings ([f58ffd3](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/f58ffd3))
+
+#### Dependency Updates
+
+- update schema-utils to v4 ([e6e3b4c](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/e6e3b4c))
+
 ## v6.0.0 (2021-08-18)
 
 #### Features

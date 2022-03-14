@@ -35,17 +35,17 @@
     "schema-utils": "^4.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
-    "@types/jest": "^27.0.3",
-    "eslint": "^8.4.0",
-    "eslint-config-pegasus": "^3.1.0",
-    "eslint-plugin-jest": "^25.3.0",
+    "@commitlint/cli": "^16.2.1",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@types/jest": "^27.4.1",
+    "eslint": "^8.11.0",
+    "eslint-config-pegasus": "^3.3.0",
+    "eslint-plugin-jest": "^26.1.1",
     "husky": "^7.0.4",
-    "jest": "^27.4.3",
-    "jest-extended": "^1.2.0",
-    "lint-staged": "^12.1.2",
+    "jest": "^27.5.1",
+    "jest-extended": "^2.0.0",
+    "lint-staged": "^12.3.5",
     "lodash": "^4.17.21",
-    "webpack": "^5.64.4"
+    "webpack": "^5.70.0"
   }
 }

@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const glob = require('fast-glob');
+const fg = require('fast-glob');
 const { validate } = require('schema-utils');
 
 const schema = require('./options.json');
@@ -52,9 +52,9 @@ class MergeJsonPlugin {
       let filesToMerge = [];
 
       if (pattern) {
-        filesToMerge = await glob(pattern, {
+        filesToMerge = await fg(pattern, {
           cwd: context,
-          ignore: '**/*.!(json)',
+          ignore: ['**/*.!(json)'],
           absolute: true,
           ...group.globOptions || globOptions,
         });

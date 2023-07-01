@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 
-const glob = require('fast-glob');
+const fg = require('fast-glob');
 const _ = require('lodash');
 
 const MergeJsonPlugin = require('../src');
@@ -18,12 +18,12 @@ const testDir = (d) => path.resolve(fixturesDir, d);
 const getFiles = async (dirName) => {
   const dir = testDir(dirName);
 
-  const files = await glob('*.json', {
+  const entries = await fg('*.json', {
     cwd: dir,
-    ignore: 'expected.json',
+    ignore: ['expected.json'],
   });
 
-  return files.map((filename) => path.join(dirName, filename));
+  return entries.map((filename) => path.join(dirName, filename));
 };
 
 const match = async (dirName) => {
@@ -320,7 +320,7 @@ test('should interpolate name correctly', async () => {
 
   expect(stats.compilation.assets).toMatchSnapshot();
 
-  const distFiles = await glob('merged-[a-z0-9]*.json', { cwd: distDir });
+  const distFiles = await fg('merged-[a-z0-9]*.json', { cwd: distDir });
   expect(distFiles.length).toBe(1);
 });
 
@@ -348,7 +348,7 @@ test('should interpolate name correctly with hashSalt', async () => {
 
   expect(stats.compilation.assets).toMatchSnapshot();
 
-  const distFiles = await glob('merged-[a-z0-9]*.json', { cwd: distDir });
+  const distFiles = await fg('merged-[a-z0-9]*.json', { cwd: distDir });
   expect(distFiles.length).toBe(1);
 });
 

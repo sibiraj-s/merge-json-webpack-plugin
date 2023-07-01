@@ -16,7 +16,7 @@ exports[`should interpolate name correctly with hashSalt 1`] = `
   "main.js": SizeOnlySource {
     "_size": 0,
   },
-  "merged-1109eb289dea763d17b4.json": SizeOnlySource {
+  "merged-53624d4aef1b8a86f29f.json": SizeOnlySource {
     "_size": 35,
   },
 }

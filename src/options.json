@@ -58,6 +58,9 @@
           "transform": {
             "instanceOf": "Function"
           },
+          "transformFile": {
+            "instanceOf": "Function"
+          },
           "to": {
             "type": "string",
             "minLength": 1

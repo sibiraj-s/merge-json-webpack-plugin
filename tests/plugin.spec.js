@@ -15,23 +15,30 @@ const outFilePath = path.resolve(distDir, outFileName);
 
 const testDir = (d) => path.resolve(fixturesDir, d);
 
-const getFiles = async (dirName) => {
+const getFiles = async (dirName, absolute = false) => {
   const dir = testDir(dirName);
 
   const entries = await fg('*.json', {
     cwd: dir,
+    absolute,
     ignore: ['expected.json'],
   });
 
+  if (absolute) {
+    return entries;
+  }
+
   return entries.map((filename) => path.join(dirName, filename));
 };
+
+const readJson = async (filePath) => JSON.parse(await fs.readFile(filePath, 'utf8'));
 
 const match = async (dirName) => {
   const dir = testDir(dirName);
 
   const expectedFilePath = path.resolve(dir, 'expected.json');
-  const exptectedJson = JSON.parse(await fs.readFile(expectedFilePath, 'utf8'));
-  const mergedJson = JSON.parse(await fs.readFile(outFilePath, 'utf8'));
+  const exptectedJson = await readJson(expectedFilePath);
+  const mergedJson = await readJson(outFilePath);
   expect(exptectedJson).toMatchObject(mergedJson);
 };
 
@@ -264,6 +271,53 @@ test('should invoke transform function', async () => {
 
   expect(transform).toHaveBeenCalled();
   expect(transform).toHaveBeenCalledBefore(mock);
+
+  expect(stats.compilation.errors).toEqual([]);
+  expect(stats.compilation.warnings).toEqual([]);
+});
+
+test('should invoke transformFile function for every file', async () => {
+  const dirName = 'default';
+  const files = await getFiles(dirName);
+  const absoluteFilePaths = await getFiles(dirName, true);
+
+  const compiler = getCompiler();
+  const transformFile = jest.fn().mockResolvedValue({});
+
+  const options = {
+    groups: [{
+      files,
+      transformFile,
+      to: outFileName,
+    }],
+  };
+
+  const mock = jest.fn();
+
+  new MergeJsonPlugin(options).apply(compiler);
+  const stats = await compile(compiler);
+  mock();
+
+  expect(transformFile).toHaveBeenCalled();
+  expect(transformFile).toHaveBeenCalledTimes(2);
+
+  const filePathWithContentPromise = absoluteFilePaths.map(async (filePath) => {
+    const fileContent = await readJson(filePath);
+    return [
+      filePath,
+      fileContent,
+    ];
+  });
+  const filePathWithContents = await Promise.all(filePathWithContentPromise);
+
+  // since glob returns files in arbitary order
+  for (const fileDetail of filePathWithContents) {
+    const arg = transformFile.mock.calls.find((args) => fileDetail[0] === args[0]);
+    expect(arg[0]).toBe(fileDetail[0]);
+    expect(arg[1]).toMatchObject(fileDetail[1]);
+  }
+
+  expect(transformFile).toHaveBeenCalledBefore(mock);
 
   expect(stats.compilation.errors).toEqual([]);
   expect(stats.compilation.warnings).toEqual([]);

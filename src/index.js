@@ -41,7 +41,7 @@ class MergeJsonPlugin {
 
     const assetsPromises = groups.map(async (group) => {
       const { files, pattern } = group;
-      const { to: outputPath, transform } = group;
+      const { to: outputPath, transform, transformFile } = group;
 
       if (this.options.mergeFn) {
         logger.debug('Using custom merge function.');
@@ -78,7 +78,10 @@ class MergeJsonPlugin {
         const jsonStr = await fs.promises.readFile(filePath, 'utf-8');
 
         logger.debug('File read successfully:', filePath);
-        return JSON.parse(jsonStr);
+
+        const json = JSON.parse(jsonStr);
+        const transformedJson = typeof transformFile === 'function' ? transformFile(filePath, json) : json;
+        return transformedJson;
       });
 
       const f = await Promise.all(filesPromises);

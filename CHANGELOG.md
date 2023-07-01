@@ -15,6 +15,21 @@ All notable changes to this project will be documented in this file.
 > - Refactor
 > - Unreleased
 
+## v6.2.0 (2023-07-01)
+
+#### Features
+
+- add transformFile option ([8656c58](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/8656c58))
+
+#### Bug Fixes
+
+- fix use array pattern for glob ignore ([da8de5b](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/da8de5b))
+
+#### Internal
+
+- add npm package provenance ([ec8dbb8](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/ec8dbb8))
+- configure publint ([cfc1f2a](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/cfc1f2a))
+
 ## v6.1.0 (2021-08-18)
 
 #### Bug Fixes

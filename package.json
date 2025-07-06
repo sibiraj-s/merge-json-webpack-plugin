@@ -1,6 +1,6 @@
 {
   "name": "merge-json-webpack-plugin",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "description": "Webpack plugin to merge multiple json files into one",
   "author": "sibiraj-s",
   "license": "MIT",

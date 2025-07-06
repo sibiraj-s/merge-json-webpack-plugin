@@ -15,6 +15,12 @@ All notable changes to this project will be documented in this file.
 > - Refactor
 > - Unreleased
 
+## v6.2.1 (2025-07-06)
+
+#### Bug Fixes
+
+- fix ignore pattern glob for json ([6ffaca5](https://github.com/sibiraj-s/merge-json-webpack-plugin/commit/6ffaca5))
+
 ## v6.2.0 (2023-07-01)
 
 #### Features

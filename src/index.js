@@ -54,7 +54,7 @@ class MergeJsonPlugin {
       if (pattern) {
         filesToMerge = await fg(pattern, {
           cwd: context,
-          ignore: ['**/*.!(json)'],
+          ignore: ['**/!(*.json)'],
           absolute: true,
           ...group.globOptions || globOptions,
         });

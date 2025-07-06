@@ -154,6 +154,6 @@ test.each(tests)('should throw schema validation error if %s', (_, { options, ex
     new MergeJsonPlugin(options).apply(compiler);
   };
 
-  expect(t).toThrowError(ValidationError);
+  expect(t).toThrow(ValidationError);
   expect(t).toThrowWithMessage(Error, new RegExp(expectedErrMessage));
 });
